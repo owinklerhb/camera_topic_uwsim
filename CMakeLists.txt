@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   std_msgs
   roscpp
+  sensor_msgs
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
