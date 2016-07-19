@@ -30,6 +30,8 @@ void CTUWSim::imageCallback(const sensor_msgs::Image& imgData) {
     cv::Mat imgMat = cv_ptr->image;
     
     std::cout << "Got an image!" << std::endl;
+    
+    // TODO: Add CV-related code to process image here.
   } else {
     std::cerr << "Got no image." << std::endl;
   }
