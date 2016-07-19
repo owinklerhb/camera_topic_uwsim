@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <name>camera_topic_uwsim</name>
+  <version>0.0.0</version>
+  <description>The camera_topic_uwsim package</description>
+  
+  <maintainer email="winkler@todo.todo">winkler</maintainer>
+  <author email="winkler@todo.todo">winkler</author>
+  
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+  
+  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/camera_topic_uwsim</url> -->
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>std_msgs</build_depend>
+  
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>std_msgs</run_depend>
+  
+  <export>
+  </export>
+</package>
