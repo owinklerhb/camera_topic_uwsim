@@ -13,8 +13,10 @@
 #include <sensor_msgs/image_encodings.h>
 
 // OpenCV
-#include <cv.h>
-#include <highgui.h>
+//#include <cv.h>
+//#include <highgui.h>
+//#include <opencv2/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 
 class CTUWSim {
