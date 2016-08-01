@@ -24,7 +24,7 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME}
-  src/main.cpp
+  
   src/CTUWSim.cpp)
 
 target_link_libraries(${PROJECT_NAME}
@@ -32,3 +32,10 @@ target_link_libraries(${PROJECT_NAME}
   ${OpenCV_LIBS}
   opencv_core
   opencv_highgui)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+
+add_executable(camera_topic_olaf src/CTUWSim.cpp)
+target_link_libraries(camera_topic_olaf ${catkin_LIBRARIES})
+add_dependencies(camera_topic_olaf camera_topic_uwsim_generate_messages_cpp)
+

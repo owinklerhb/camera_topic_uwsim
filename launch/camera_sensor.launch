@@ -1,0 +1,7 @@
+<launch>
+	<node type="camera_topic_uwsim" pkg="camera_topic_uwsim" name="Name">
+	    <remap from="camera1" to="cv_in"/>
+	    <param name="fixed_frame" type="string" value="world" />
+	  </node>
+</launch>
+

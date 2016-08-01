@@ -1,0 +1,19 @@
+<!--xml-->
+<launch>
+  <node name="camera" pkg="uwsim" type="uwsim" name="camera_to_ocv" output="screen">
+    <param name="width" type="int" value="640" />
+    <param name="height" type="int" value="480" />
+    <param name="fps" type="int" value="30" />
+    <param name="frame" type="string" value="webcam" />
+    <param name="device" type="string" value="/uwsim/camera1" />
+  </node>
+
+  <node name="camera_topic_uwsim" pkg="camera_topic_uwsim" type="camera_topic_uwsim" output="screen">
+    <param name="width" type="int" value="640" />
+    <param name="height" type="int" value="480" />
+    <param name="fps" type="int" value="30" />
+    <param name="frame" type="string" value="webcam" />
+    <param name="device" type="string" value="/uwsim/camera1" />
+  </node>
+
+</launch>
