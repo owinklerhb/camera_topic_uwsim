@@ -7,10 +7,14 @@
 #include <iostream>
 
 // ROS
+#include <image_transport/image_transport.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
+//#include <opencv2/imgproc/imgproc.hpp>
+//#include <opencv2/highgui/highgui.hpp>
+//#include <opencv2/core/core_c.h>
 
 // OpenCV
 //#include <cv.h>
@@ -38,7 +42,7 @@ public:
   }
   
   bool run(std::string strTopicName);
-  void imageCallback(const sensor_msgs::Image& imgData);
+  void imageCallback(const sensor_msgs::ImagePtr& imgData);
 };
 
 
