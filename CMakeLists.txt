@@ -20,6 +20,7 @@ catkin_package(
 
 include_directories(
   include
+  ${OpenCV_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -30,9 +31,9 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
-  opencv_core
-  opencv_highgui)
-
+  #opencv_core
+  #opencv_highgui)
+)
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(camera_topic_olaf src/CTUWSim.cpp)
