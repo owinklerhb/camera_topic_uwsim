@@ -100,12 +100,14 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
             count_black = imgMat.cols * imgMat.rows - count_white;
             cout << "white pixels = " << count_white << endl;
             cout << "black pixels = " << count_black << endl;
+	    cout << "Percentage white pixels = " << count_white/768 << endl;
             cout << endl;
             imshow("Image", imgMat); 
          
         ofstream myfile;
         myfile.open ("val.csv");
-        myfile << "written text \n";
+        //myfile << "written text \n";
+	myfile << 76800 / count_white ;
         myfile.close();
 
     int count = 0;
