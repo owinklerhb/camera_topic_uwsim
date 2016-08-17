@@ -10,7 +10,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "ros/ros.h"
-
+#include <fstream> //for writing into files
+using namespace std; //also for writing into files 
 
 int main(int argc, char** argv) {
   int nReturnvalue = EXIT_FAILURE;
@@ -71,9 +72,9 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
             cv::cvtColor(imgMat,filtered_image,CV_BGR2GRAY);
 
 	// threshold image 
-	    int global_min_threshold=50; //ggf. löschen
+	    int global_min_threshold=40; //ggf. löschen
 	    cv::Mat threshold_image;
-	    cv::threshold(filtered_image,imgMat,global_min_threshold,215,cv::THRESH_BINARY_INV);
+	    cv::threshold(filtered_image,imgMat,global_min_threshold,255,cv::THRESH_BINARY_INV);
 	    //cv::namedWindow("Threshold Image");
 	    //cv::imshow("Threshold Image",threshold_image);
 	    
@@ -87,7 +88,26 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
     imgPub_pub.publish(*(cv_ptr->toImageMsg()));//imgData); cv_prt->toImageMsg()
     //std::cout << imgData << std::endl;
     ros::Rate loop_rate(10);
+
+    //count white pixels
     
+         cv::Mat partROI;
+            //cvtColor(partROI, partROI, CV_BGR2GRAY);
+            int count_white = 0;
+            int count_black = 0;
+            //threshold( partROI, partROI, 200, 255, THRESH_BINARY );
+            count_white = countNonZero(imgMat);
+            count_black = imgMat.cols * imgMat.rows - count_white;
+            cout << "white pixels = " << count_white << endl;
+            cout << "black pixels = " << count_black << endl;
+            cout << endl;
+            imshow("Image", imgMat); 
+         
+        ofstream myfile;
+        myfile.open ("val.csv");
+        myfile << "written text \n";
+        myfile.close();
+
     int count = 0;
     while (ros::ok())
       {
@@ -100,7 +120,10 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
     
     
     // Stop CV-related code here
-    
+      //Write values to a File
+        
+
+               
     
   } else {
     std::cerr << "Got no image." << std::endl;
