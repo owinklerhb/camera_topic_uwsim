@@ -11,6 +11,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "ros/ros.h"
 #include <fstream> //for writing into files
+
 using namespace std; //also for writing into files 
 
 int main(int argc, char** argv) {
@@ -21,7 +22,7 @@ int main(int argc, char** argv) {
   
   ros::init(argc, argv, "image_publisher_node");
   ros::NodeHandle nh("~");
-  
+  //hier csv erstellen und öffnen
   CTUWSim::Ptr ctuwsimMain = CTUWSim::create();
   
  if(ctuwsimMain->run("/uwsim/camera1")) { 
@@ -51,7 +52,10 @@ bool CTUWSim::run(std::string strTopicName) {
 void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback bekommt Daten von sensor_msgs im Image Format
   cv_bridge::CvImagePtr cv_ptr = nullptr;					//absichern, dass cv_ptr nirgendwo hinzeigt
   //sensor_msgs::Image msg;
-
+	//hier in csv reinschreiben
+        //ofstream myfile;
+	ofstream myfile("val2.csv", std::ios_base::app); //ios_base macht den Unterschied ;)
+        //myfile.open ("val.csv");
 
 
   //msg wird als sensor_msgs im Format Image deklariert
@@ -65,14 +69,14 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
   if(cv_ptr) {
     cv::Mat imgMat = cv_ptr->image; //ROS to OpenCv
 
-       // TODO: Add CV-related code to process image here.
+       // Add CV-related code to process image here.
 
 	 /* Gray scale image */
             cv::Mat filtered_image;
             cv::cvtColor(imgMat,filtered_image,CV_BGR2GRAY);
 
 	// threshold image 
-	    int global_min_threshold=40; //ggf. löschen
+	    int global_min_threshold=40; //hier die Untergrenze des Threshold
 	    cv::Mat threshold_image;
 	    cv::threshold(filtered_image,imgMat,global_min_threshold,255,cv::THRESH_BINARY_INV);
 	    //cv::namedWindow("Threshold Image");
@@ -93,23 +97,26 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
     
          cv::Mat partROI;
             //cvtColor(partROI, partROI, CV_BGR2GRAY);
-            int count_white = 0;
-            int count_black = 0;
+            float count_white = 0;
+            float count_black = 0;
             //threshold( partROI, partROI, 200, 255, THRESH_BINARY );
             count_white = countNonZero(imgMat);
             count_black = imgMat.cols * imgMat.rows - count_white;
             cout << "white pixels = " << count_white << endl;
             cout << "black pixels = " << count_black << endl;
-	    cout << "Percentage white pixels = " << count_white/768 << endl;
+	    float perc =count_white/768;
+	    cout << "Percentage white pixels = " << perc << endl;
             cout << endl;
             imshow("Image", imgMat); 
          
-        ofstream myfile;
-        myfile.open ("val.csv");
-        //myfile << "written text \n";
-	myfile << 76800 / count_white ;
-        myfile.close();
-
+        //ofstream myfile;
+        //myfile.open ("val.csv");
+          	//myfile << "written text \n";
+	myfile << perc;
+	myfile << ", \n";
+	//myfile << " \n”;
+	//myfile.close();
+		
     int count = 0;
     while (ros::ok())
       {
@@ -122,8 +129,8 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
     
     
     // Stop CV-related code here
-      //Write values to a File
-        
+      //hier csv schließen
+      myfile.close();
 
                
     
