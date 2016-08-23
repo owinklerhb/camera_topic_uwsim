@@ -11,8 +11,12 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "ros/ros.h"
 #include <fstream> //for writing into files
+#include <sensor_msgs/NavSatFix.h>
+
 
 using namespace std; //also for writing into files 
+
+
 
 int main(int argc, char** argv) {
   int nReturnvalue = EXIT_FAILURE;
@@ -24,7 +28,7 @@ int main(int argc, char** argv) {
   ros::NodeHandle nh("~");
   //hier csv erstellen und öffnen
   CTUWSim::Ptr ctuwsimMain = CTUWSim::create();
-  
+
  if(ctuwsimMain->run("/uwsim/camera1")) { 
  //if(ctuwsimMain->run("/uwsim/rangecamera")) {
     nReturnvalue = EXIT_SUCCESS;
@@ -32,6 +36,15 @@ int main(int argc, char** argv) {
   
   return nReturnvalue;
 }
+
+
+		//subscribe to GPS
+void CTUWSim::gpsCallback(const sensor_msgs::NavSatFix::ConstPtr& msg)
+{
+  m_gpsPosition = *msg;
+  m_gpsSignalReceived = true;
+}
+
 
 CTUWSim::CTUWSim() {
 }
@@ -43,13 +56,16 @@ bool CTUWSim::run(std::string strTopicName) {
   bool bSuccess = false;
   
   m_subImage = m_nhNodeHandle.subscribe(strTopicName, 1, &CTUWSim::imageCallback, this);
-  
+  ros::Subscriber sub = m_nhNodeHandle.subscribe("/g500/gps", 1000, &CTUWSim::gpsCallback, this);
   ros::spin();
   
   return bSuccess;
 }
 
 void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback bekommt Daten von sensor_msgs im Image Format
+   if (!m_gpsSignalReceived){
+	return;
+  }
   cv_bridge::CvImagePtr cv_ptr = nullptr;					//absichern, dass cv_ptr nirgendwo hinzeigt
   //sensor_msgs::Image msg;
 	//hier in csv reinschreiben
@@ -102,21 +118,34 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
             //threshold( partROI, partROI, 200, 255, THRESH_BINARY );
             count_white = countNonZero(imgMat);
             count_black = imgMat.cols * imgMat.rows - count_white;
-            cout << "white pixels = " << count_white << endl;
-            cout << "black pixels = " << count_black << endl;
+            //cout << "white pixels = " << count_white << endl;
+            //cout << "black pixels = " << count_black << endl;
 	    float perc =count_white/768;
-	    cout << "Percentage white pixels = " << perc << endl;
+	    cout << "Percentage of objects covering surface = " << perc << endl;
+	    cout << "latitude " << m_gpsPosition.latitude << " longitude " << m_gpsPosition.longitude << endl;
             cout << endl;
             imshow("Image", imgMat); 
          
         //ofstream myfile;
         //myfile.open ("val.csv");
           	//myfile << "written text \n";
-	myfile << perc;
-	myfile << ", \n";
+	myfile << perc << ", " << "latitude " << m_gpsPosition.latitude << " longitude " << m_gpsPosition.longitude << endl;
+	
 	//myfile << " \n”;
 	//myfile.close();
+
+
 		
+/*				//Publish Percentage on ros topic
+    ros::NodeHandle k;
+    ros::Publisher percentPub = k.advertise<std::float>("percentage_pub", 1000);
+    //percentPub.publish(*(cv_ptr->toImageMsg()));
+	percentPub.publish(perc);
+    //std::cout << imgData << std::endl;
+    //ros::Rate loop_rate(10);
+				//Ende Pusblish Percentage on ros topic */
+
+
     int count = 0;
     while (ros::ok())
       {

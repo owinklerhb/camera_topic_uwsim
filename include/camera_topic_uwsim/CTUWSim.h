@@ -21,6 +21,7 @@
 //#include <highgui.h>
 //#include <opencv2/highgui.hpp>
 #include <opencv2/opencv.hpp>
+#include <sensor_msgs/NavSatFix.h>
 
 
 class CTUWSim {
@@ -30,6 +31,8 @@ public:
 private:
   ros::NodeHandle m_nhNodeHandle;
   ros::Subscriber m_subImage;
+  sensor_msgs::NavSatFix m_gpsPosition;
+  bool m_gpsSignalReceived = false;
   
 protected:
 public:
@@ -43,6 +46,7 @@ public:
   
   bool run(std::string strTopicName);
   void imageCallback(const sensor_msgs::ImagePtr& imgData);
+  void gpsCallback(const sensor_msgs::NavSatFix::ConstPtr& msg);
 };
 
 

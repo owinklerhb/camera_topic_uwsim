@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="80">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="camera_topic_uwsim" root=".">
+      <df name="catkin">
+        <df name="catkin_generated">
+          <df name="version">
+            <in>package.cmake</in>
+          </df>
+        </df>
+      </df>
+      <df name="catkin_generated">
+        <df name="installspace">
+          <in>_setup_util.py</in>
+          <in>env.sh</in>
+          <in>setup.bash</in>
+          <in>setup.sh</in>
+          <in>setup.zsh</in>
+        </df>
+        <df name="stamps">
+          <df name="camera_topic_uwsim">
+            <in>_setup_util.py.stamp</in>
+            <in>interrogate_setup_dot_py.py.stamp</in>
+            <in>package.xml.stamp</in>
+          </df>
+        </df>
+        <in>env_cached.sh</in>
+        <in>generate_cached_setup.py</in>
+        <in>setup_cached.sh</in>
+      </df>
+      <df name="CMakeFiles">
+        <df name="2.8.12.2">
+          <df name="CompilerIdC">
+            <in>CMakeCCompilerId.c</in>
+            <in>a.out</in>
+          </df>
+          <df name="CompilerIdCXX">
+            <in>CMakeCXXCompilerId.cpp</in>
+            <in>a.out</in>
+          </df>
+          <in>CMakeCCompiler.cmake</in>
+          <in>CMakeCXXCompiler.cmake</in>
+          <in>CMakeDetermineCompilerABI_C.bin</in>
+          <in>CMakeDetermineCompilerABI_CXX.bin</in>
+          <in>CMakeSystem.cmake</in>
+        </df>
+        <df name="CMakeTmp">
+        </df>
+        <in>CMakeError.log</in>
+        <in>CMakeOutput.log</in>
+        <in>cmake.check_cache</in>
+      </df>
+      <df name="devel">
+        <in>_setup_util.py</in>
+        <in>env.sh</in>
+        <in>setup.bash</in>
+        <in>setup.sh</in>
+        <in>setup.zsh</in>
+      </df>
+      <df name="gtest">
+        <df name="CMakeFiles">
+        </df>
+      </df>
+      <df name="include">
+        <df name="camera_topic_uwsim">
+          <in>CTUWSim.h</in>
+        </df>
+      </df>
+      <df name="launch">
+        <in>camera_subscriber.cpp</in>
+      </df>
+      <df name="src">
+        <in>CTUWSim.cpp</in>
+        <in>main.cpp</in>
+      </df>
+      <df name="test_results">
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>CMakeLists.txt</itemPath>
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+      </makefileType>
+    </conf>
+  </confs>
+</configurationDescriptor>

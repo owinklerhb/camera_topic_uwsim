@@ -1,0 +1,53 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec4275721246/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4275721246.dir/build.make CMakeFiles/cmTryCompileExec4275721246.dir/build
+make[1]: Entering directory `/home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4275721246.dir/CheckSymbolExists.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec4275721246.dir/CheckSymbolExists.c.o   -c /home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec4275721246
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4275721246.dir/link.txt --verbose=1
+/usr/bin/gcc       CMakeFiles/cmTryCompileExec4275721246.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4275721246 -rdynamic 
+CMakeFiles/cmTryCompileExec4275721246.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[1]: *** [cmTryCompileExec4275721246] Error 1
+make[1]: Leaving directory `/home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec4275721246/fast] Error 2
+
+File /home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2526774399/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2526774399.dir/build.make CMakeFiles/cmTryCompileExec2526774399.dir/build
+make[1]: Entering directory `/home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2526774399.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec2526774399.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2526774399
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2526774399.dir/link.txt --verbose=1
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec2526774399.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2526774399 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[1]: *** [cmTryCompileExec2526774399] Error 1
+make[1]: Leaving directory `/home/olaf/catkin_ws/src/camera_topic_uwsim/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec2526774399/fast] Error 2
+
+

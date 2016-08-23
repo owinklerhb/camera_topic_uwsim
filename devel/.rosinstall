@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/olaf/catkin_ws/src/camera_topic_uwsim/devel/setup.sh
