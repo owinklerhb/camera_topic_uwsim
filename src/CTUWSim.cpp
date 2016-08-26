@@ -12,7 +12,7 @@
 #include "ros/ros.h"
 #include <fstream> //for writing into files
 #include <sensor_msgs/NavSatFix.h>
-
+//Seesterne zur Erkennung unterschiedlicher Arten mit einbauen -> auf Farben zurückgreifen
 
 using namespace std; //also for writing into files 
 
@@ -56,13 +56,14 @@ bool CTUWSim::run(std::string strTopicName) {
   bool bSuccess = false;
   
   m_subImage = m_nhNodeHandle.subscribe(strTopicName, 1, &CTUWSim::imageCallback, this);
-  ros::Subscriber sub = m_nhNodeHandle.subscribe("/g500/gps", 1000, &CTUWSim::gpsCallback, this);
+  ros::Subscriber sub = m_nhNodeHandle.subscribe("/g500/gps", 1, &CTUWSim::gpsCallback, this);
   ros::spin();
   
   return bSuccess;
 }
 
 void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback bekommt Daten von sensor_msgs im Image Format
+
    if (!m_gpsSignalReceived){
 	return;
   }
@@ -112,30 +113,17 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
     //count white pixels
     
          cv::Mat partROI;
-            //cvtColor(partROI, partROI, CV_BGR2GRAY);
             float count_white = 0;
             float count_black = 0;
-            //threshold( partROI, partROI, 200, 255, THRESH_BINARY );
             count_white = countNonZero(imgMat);
             count_black = imgMat.cols * imgMat.rows - count_white;
-            //cout << "white pixels = " << count_white << endl;
-            //cout << "black pixels = " << count_black << endl;
 	    float perc =count_white/768;
 	    cout << "Percentage of objects covering surface = " << perc << endl;
 	    cout << "latitude " << m_gpsPosition.latitude << " longitude " << m_gpsPosition.longitude << endl;
             cout << endl;
             imshow("Image", imgMat); 
-         
-        //ofstream myfile;
-        //myfile.open ("val.csv");
-          	//myfile << "written text \n";
 	myfile << perc << ", " << "latitude " << m_gpsPosition.latitude << " longitude " << m_gpsPosition.longitude << endl;
-	
-	//myfile << " \n”;
-	//myfile.close();
-
-
-		
+	//cout << "Hallo Fereshta" << endl;	
 /*				//Publish Percentage on ros topic
     ros::NodeHandle k;
     ros::Publisher percentPub = k.advertise<std::float>("percentage_pub", 1000);
