@@ -77,7 +77,7 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
 
   //msg wird als sensor_msgs im Format Image deklariert
   if(sensor_msgs::image_encodings::isColor(imgData->encoding)) {		//wenn das eingehende Bild BGR8 Format ist, zeigt der cv_ptr darauf
-    cv_ptr = cv_bridge::toCvCopy(imgData, sensor_msgs::image_encodings::BGR8); 	//RGB8// BGR16 /// RGBA16 // etc.
+    cv_ptr = cv_bridge::toCvCopy(imgData, sensor_msgs::image_encodings::BGR8); 	//BGR8, RGB8// BGR16 /// RGBA16 // etc.
     //cv_ptr = cv_bridge::toCvShare(imgData, "rgb8")->image;
   } else {
     std::cerr << "No color image" << std::endl;					//Fehlermeldung, dass das Bild kein Farbformat hat
@@ -89,13 +89,13 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
        // Add CV-related code to process image here.
 
 	 /* Gray scale image */
-            cv::Mat filtered_image;
+           cv::Mat filtered_image;
             cv::cvtColor(imgMat,filtered_image,CV_BGR2GRAY);
 
 	// threshold image 
-	    int global_min_threshold=40; //hier die Untergrenze des Threshold
+	    int global_min_threshold=50; //hier die Untergrenze des Threshold
 	    cv::Mat threshold_image;
-	    cv::threshold(filtered_image,imgMat,global_min_threshold,255,cv::THRESH_BINARY_INV);
+	    cv::threshold(filtered_image,imgMat,global_min_threshold,255,cv::THRESH_BINARY_INV); //Obergrenze auf 255 für echtes Weiß
 	    //cv::namedWindow("Threshold Image");
 	    //cv::imshow("Threshold Image",threshold_image);
 	    
@@ -104,11 +104,11 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
    
     //OPENCV TO ROS
     ros::NodeHandle n;
-    ros::Publisher imgPub_pub = n.advertise<sensor_msgs::Image>("Image_Pub", 1000);
+    ros::Publisher imgPub_pub = n.advertise<sensor_msgs::Image>("Image_Pub", 100);
     //  sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg() //von Fereshta
     imgPub_pub.publish(*(cv_ptr->toImageMsg()));//imgData); cv_prt->toImageMsg()
     //std::cout << imgData << std::endl;
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(2);
 
     //count white pixels
     
@@ -120,9 +120,10 @@ void CTUWSim::imageCallback(const sensor_msgs::ImagePtr& imgData) { 		//callback
 	    float perc =count_white/768;
 	    cout << "Percentage of objects covering surface = " << perc << endl;
 	    cout << "latitude " << m_gpsPosition.latitude << " longitude " << m_gpsPosition.longitude << endl;
-            cout << endl;
+          
             imshow("Image", imgMat); 
-	myfile << perc << ", " << "latitude " << m_gpsPosition.latitude << " longitude " << m_gpsPosition.longitude << endl;
+  	    cout <<"HIER SEGMENT "<<endl;
+	myfile << perc << ", " << "latitude, " << m_gpsPosition.latitude * 3.5 << ", longitude, " << m_gpsPosition.longitude * 3.2 << endl;
 	//cout << "Hallo Fereshta" << endl;	
 /*				//Publish Percentage on ros topic
     ros::NodeHandle k;
